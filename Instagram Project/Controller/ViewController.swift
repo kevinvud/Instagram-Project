@@ -9,13 +9,13 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let plusPhotoButton: UIButton = {
         
         let button = UIButton()
         button.setImage(UIImage(named: "plus_photo")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
         return button
     }()
     
@@ -162,8 +162,6 @@ class ViewController: UIViewController {
     
     }
     
-    
-    
     @objc func handleSignup(){
         guard let email = emailTextField.text, email.characters.count > 0 else {return}
         guard let username = userNameTextField.text, username.characters.count > 0 else {return}
@@ -175,12 +173,69 @@ class ViewController: UIViewController {
                 return
             }
             
+            guard let image = self.plusPhotoButton.imageView?.image else {return}
+            
+            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else {return}
+            
+            guard let userUid = user?.uid else {return}
+            
+            Storage.storage().reference().child("profile_images").child(userUid).putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                if let error = error{
+                    print("Failed to upload profile image:", error)
+                    return
+                }
+                
+                guard let profileImageUrl = metadata?.downloadURL()?.absoluteString else {return}
+                
+                
+                let dictionaryValues = ["username" : username, "profileImageUrl" : profileImageUrl]
+                let values = [userUid: dictionaryValues]
+                
+                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    if let error = error {
+                        print(error)
+                        return
+                        
+                    }
+                })
+
+            })
+            
             
         }
         
+    }
+    
+    
+    @objc func handlePlusPhoto(){
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        
+        present(imagePickerController, animated: true, completion: nil)
+        
+        
         
     }
-
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        }else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+            
+        }
+        plusPhotoButton.imageView?.contentMode = .scaleAspectFill
+        plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width / 2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.gray.cgColor
+        plusPhotoButton.layer.borderWidth = 3
+        
+        
+        
+        dismiss(animated: true, completion: nil)
+    }
 
 }
 
