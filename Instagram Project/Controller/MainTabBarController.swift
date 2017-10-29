@@ -9,10 +9,28 @@
 import UIKit
 import Firebase
 
-class MainTabBarController: UITabBarController {
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let index = viewControllers?.index(of: viewController)
+        if index == 2{
+            
+            let layout = UICollectionViewFlowLayout()
+            let photoSelectorController = PhotoSelectorController(collectionViewLayout: layout)
+            let navController = UINavigationController(rootViewController: photoSelectorController)
+            present(navController, animated: true, completion: nil)
+            return false
+        }
+        
+        return true
+    }
+    
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.delegate = self
         
         if Auth.auth().currentUser == nil {
             
@@ -25,22 +43,48 @@ class MainTabBarController: UITabBarController {
             }
             return
         }
-    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        setupViewControllers()
+    }
+    
+    func setupViewControllers(){
+        
+        let homeNavController = templateNavController(unselected: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"))
+        
+        let searchNavController = templateNavController(unselected: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"))
+        
+        let plusNavController = templateNavController(unselected: #imageLiteral(resourceName: "plus_unselected") , selectedImage: #imageLiteral(resourceName: "plus_unselected"))
+        
+        let likeNavController = templateNavController(unselected: #imageLiteral(resourceName: "like_unselected"), selectedImage: #imageLiteral(resourceName: "like_selected"))
         
         let layout = UICollectionViewFlowLayout()
         let userProfileController = UserProfileController(collectionViewLayout: layout)
         
-        let navController = UINavigationController(rootViewController: userProfileController)
-        navController.tabBarItem.image = UIImage(named: "profile_unselected")
-        navController.tabBarItem.selectedImage = UIImage(named: "profile_selected")
+        let userProfileNavController = UINavigationController(rootViewController: userProfileController)
+        userProfileNavController.tabBarItem.image = UIImage(named: "profile_unselected")
+        userProfileNavController.tabBarItem.selectedImage = UIImage(named: "profile_selected")
+        
         tabBar.tintColor = UIColor.darkGray
         
-        viewControllers = [navController, UIViewController()]
+        viewControllers = [homeNavController, searchNavController, plusNavController, likeNavController, userProfileNavController]
+        
+        guard let items = tabBar.items else {return}
+        for item in items {
+            item.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
+        }
+    }
+    
+    private func templateNavController(unselected: UIImage, selectedImage: UIImage) -> UINavigationController {
+        let viewController = UIViewController()
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.tabBarItem.image = unselected
+        navController.tabBarItem.selectedImage = selectedImage
+        return navController
+        
+        
+        
         
     }
     
-
+    
 }

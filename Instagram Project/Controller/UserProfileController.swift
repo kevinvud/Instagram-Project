@@ -17,12 +17,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = UIColor.darkGray
-        navigationItem.title = "User Profile"
+        navigationItem.title = " "
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         fetchUser()
         setupLogOutButton()
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -48,6 +47,9 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (alert) in
             do{
                 try Auth.auth().signOut()
+                let loginController = LoginController()
+                let navController = UINavigationController(rootViewController: loginController)
+                self.present(navController, animated: true, completion: nil)
             }catch{
                 print(error)
             }
@@ -62,7 +64,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     func fetchUser(){
         
         guard let uid = Auth.auth().currentUser?.uid else {return}
-        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             
             guard let dictionary = snapshot.value as? [String: Any] else {return}
             
