@@ -32,10 +32,6 @@ class LoginOrSignUpController: UIViewController {
         view.backgroundColor = UIColor.lightGray
         view.addSubview(signUpButton)
         view.addSubview(loginButton)
-        
-        
-        
-        
     }
 
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SharePhotoController: UIViewController {
     
@@ -57,7 +58,44 @@ class SharePhotoController: UIViewController {
     }
     
     @objc func handleShare(){
+        guard let caption = textView.text, caption.characters.count > 0 else {return}
+        guard let image = selectedImage else {return}
+        guard let uploadData = UIImageJPEGRepresentation(image, 0.5) else {return}
+        navigationItem.rightBarButtonItem?.isEnabled = false
         
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("Posts").child(filename).putData(uploadData, metadata: nil) { (metadata, err) in
+            
+            if let err = err {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                print("Failed to upload post image: ", err)
+                return
+            }
+            guard let imageUrl = metadata?.downloadURL()?.absoluteString else {return}
+            
+            self.saveToDatabaseWithImageUrl(imageUrl: imageUrl)
+            
+        }
+        
+        
+    }
+    
+    private func saveToDatabaseWithImageUrl(imageUrl: String){
+        guard let postImage = selectedImage else {return}
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let caption = textView.text else {return}
+        let userPostRef = Database.database().reference().child("posts").child(uid)
+        let ref = userPostRef.childByAutoId()
+        let values = ["imageUrl": imageUrl, "caption": caption, "imageWidth": postImage.size.width, "imageHeight": postImage.size.height, "creationDate" : Date().timeIntervalSince1970] as [String: Any]
+        ref.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                print("failed to save post to DB", err)
+                return
+            }
+            self.dismiss(animated: true, completion: nil)
+            
+        }
         
         
     }
