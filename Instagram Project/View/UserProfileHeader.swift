@@ -13,13 +13,14 @@ class UserProfileHeader: UICollectionViewCell {
     
     var user: User? {
         didSet{
-            setupProfileImage()
+            guard let profileImageUrl = user?.profileImageUrl else {return}
+            profileImageView.loadImage(urlString: profileImageUrl)
             usernameLabel.text = user?.userName
         }
     }
     
-    let profileImageView: UIImageView = {
-        let iv = UIImageView()
+    let profileImageView: CustomImageView = {
+        let iv = CustomImageView()
         iv.layer.cornerRadius = 80 / 2
         iv.backgroundColor = UIColor.brown
         iv.clipsToBounds = true
@@ -147,23 +148,5 @@ class UserProfileHeader: UICollectionViewCell {
         
     }
     
-    private func setupProfileImage(){
-        
-        guard let profileImageUrl = user?.profileImageUrl else {return}
-        guard let url = URL(string: profileImageUrl) else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print("Failed to fetch profile image:", error)
-                return
-            }
-            
-            guard let data = data else {return}
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                self.profileImageView.image = image
-            }
-            }.resume()
-    }
 }
 

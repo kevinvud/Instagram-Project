@@ -27,6 +27,7 @@
 		D1622DF81FA0E1170079A6ED /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1622DF71FA0E1170079A6ED /* Extension.swift */; };
 		D1622DFE1FA11A510079A6ED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1622DFD1FA11A510079A6ED /* GoogleService-Info.plist */; };
 		D1C718B71FA7C6050090B922 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718B61FA7C6050090B922 /* UserProfilePhotoCell.swift */; };
+		D1C718B91FA7E9CB0090B922 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718B81FA7E9CB0090B922 /* CustomImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		D1622DF71FA0E1170079A6ED /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		D1622DFD1FA11A510079A6ED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D1C718B61FA7C6050090B922 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
+		D1C718B81FA7E9CB0090B922 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				D1622DF71FA0E1170079A6ED /* Extension.swift */,
+				D1C718B81FA7E9CB0090B922 /* CustomImageView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				D128E0D51FA7C3DC00D636C4 /* Post.swift in Sources */,
 				D128E0BB1FA22C3E00D636C4 /* UserProfileHeader.swift in Sources */,
 				D128E0B91FA2257300D636C4 /* UserProfileController.swift in Sources */,
+				D1C718B91FA7E9CB0090B922 /* CustomImageView.swift in Sources */,
 				D128E0C91FA39A1F00D636C4 /* LoginController.swift in Sources */,
 				D128E0D31FA798EF00D636C4 /* SharePhotoController.swift in Sources */,
 				D1622DE61FA0DB900079A6ED /* AppDelegate.swift in Sources */,
