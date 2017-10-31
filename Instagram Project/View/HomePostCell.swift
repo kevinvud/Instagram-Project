@@ -28,6 +28,66 @@ class HomePostCell: UICollectionViewCell {
         
     }()
     
+    let userProfileImageView: UIImageView = {
+        let iv = CustomImageView()
+        iv.layer.cornerRadius = 20
+        iv.backgroundColor = .blue
+        return iv
+    }()
+    
+    let usernameLabel: UILabel = {
+       let lb = UILabel()
+        lb.text = "Username"
+        lb.font = UIFont.boldSystemFont(ofSize: 14)
+        return lb
+        
+    }()
+    
+    let optionButton: UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+        
+    }()
+    
+    let likeButton: UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
+        return button
+    }()
+    let commentButton: UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
+        return button
+        
+    }()
+    let sendMessageButton: UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.setImage(#imageLiteral(resourceName: "send2").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
+        return button
+        
+    }()
+    let bookmarkButton: UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(UIImageRenderingMode.alwaysOriginal), for: .normal)
+        return button
+        
+    }()
+    
+    let captionLabel: UILabel = {
+       
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(string: "Username", attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSAttributedString(string: " Some caption text will display here", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]))
+        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 4)]))
+        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor : UIColor.gray]))
+        label.attributedText = attributedText
+        label.numberOfLines = 0
+        return label
+        
+    }()
+    
     override init(frame: CGRect) {
         super .init(frame: frame)
         setupViews()
@@ -37,8 +97,28 @@ class HomePostCell: UICollectionViewCell {
     }
     
     func setupViews(){
-        addSubview(photoImageView)
         
-        photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(photoImageView)
+        addSubview(userProfileImageView)
+        addSubview(usernameLabel)
+        addSubview(optionButton)
+        addSubview(bookmarkButton)
+        addSubview(captionLabel)
+        
+        userProfileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        usernameLabel.anchor(top: topAnchor, left: userProfileImageView.rightAnchor, bottom: photoImageView.topAnchor, right: optionButton.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        optionButton.anchor(top: topAnchor, left: nil, bottom: photoImageView.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 0)
+        photoImageView.anchor(top: userProfileImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        photoImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [likeButton,commentButton,sendMessageButton])
+        stackView.distribution = .fillEqually
+        addSubview(stackView)
+        stackView.anchor(top: photoImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
+        
+        bookmarkButton.anchor(top: photoImageView.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 50)
+        
+        captionLabel.anchor(top: likeButton.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        
     }
 }

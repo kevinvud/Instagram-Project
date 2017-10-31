@@ -32,6 +32,8 @@ class CustomImageView: UIImageView {
             let photoImage = UIImage(data: imageData)
             imageCache[url.absoluteString] = photoImage
             DispatchQueue.main.async {
+                self.contentMode = .scaleAspectFill
+                self.clipsToBounds = true
                 self.image = photoImage
             }
             }.resume()
