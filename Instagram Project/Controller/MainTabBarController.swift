@@ -20,12 +20,9 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             present(navController, animated: true, completion: nil)
             return false
         }
-        
         return true
     }
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,7 +45,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func setupViewControllers(){
         
-        let homeNavController = templateNavController(unselected: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"))
+        let homeNavController = templateNavController(unselected: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         let searchNavController = templateNavController(unselected: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"))
         
@@ -73,14 +70,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         }
     }
     
-    private func templateNavController(unselected: UIImage, selectedImage: UIImage) -> UINavigationController {
-        let viewController = UIViewController()
+    private func templateNavController(unselected: UIImage, selectedImage: UIImage, rootViewController: UIViewController = UIViewController()) -> UINavigationController {
+        let viewController = rootViewController
         let navController = UINavigationController(rootViewController: viewController)
         navController.tabBarItem.image = unselected
         navController.tabBarItem.selectedImage = selectedImage
         return navController
-        
-        
         
         
     }
