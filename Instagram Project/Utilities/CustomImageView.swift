@@ -16,6 +16,8 @@ class CustomImageView: UIImageView {
     func loadImage(urlString: String) {
         lastURLUserToLoadImage = urlString
         if let catchedImage = imageCache[urlString]{
+            self.contentMode = .scaleAspectFill
+            self.clipsToBounds = true
             self.image = catchedImage
             return
         }
