@@ -161,7 +161,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   
     @objc func handleTextInputChange() {
         
-        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && userNameTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+        let isFormValid = emailTextField.text!.count > 0 && userNameTextField.text!.count > 0 && passwordTextField.text!.count > 0
         
         if isFormValid {
             signUpButton.isEnabled = true
@@ -175,9 +175,9 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     @objc func handleSignup(){
-        guard let email = emailTextField.text, email.characters.count > 0 else {return}
-        guard let username = userNameTextField.text, username.characters.count > 0 else {return}
-        guard let password = passwordTextField.text, password.characters.count > 0 else {return}
+        guard let email = emailTextField.text, !email.isEmpty else {return}
+        guard let username = userNameTextField.text, !username.isEmpty else {return}
+        guard let password = passwordTextField.text, !password.isEmpty else {return}
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {

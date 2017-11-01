@@ -146,13 +146,11 @@ class LoginController: UIViewController {
             self.dismiss(animated: true, completion: nil)
             
         }
-        
-        
     }
     
     @objc func handleTextInputChange(){
         
-        let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+        let isFormValid = emailTextField.text!.count > 0 && passwordTextField.text!.count > 0
         
         if isFormValid {
             loginButton.isEnabled = true
