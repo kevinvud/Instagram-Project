@@ -32,6 +32,7 @@
 		D1C718BD1FA7F9B70090B922 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718BC1FA7F9B70090B922 /* HomePostCell.swift */; };
 		D1C718BF1FA8DF6B0090B922 /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718BE1FA8DF6B0090B922 /* UserSearchController.swift */; };
 		D1C718C11FA8E6B60090B922 /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718C01FA8E6B60090B922 /* UserSearchCell.swift */; };
+		D1FDB6A01FAA686200CC1A69 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FDB69F1FAA686200CC1A69 /* CameraController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		D1C718BC1FA7F9B70090B922 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		D1C718BE1FA8DF6B0090B922 /* UserSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
 		D1C718C01FA8E6B60090B922 /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
+		D1FDB69F1FAA686200CC1A69 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				D128E0D21FA798EF00D636C4 /* SharePhotoController.swift */,
 				D1C718BA1FA7F4C50090B922 /* HomeController.swift */,
 				D1C718BE1FA8DF6B0090B922 /* UserSearchController.swift */,
+				D1FDB69F1FAA686200CC1A69 /* CameraController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				D128E0B71FA224BC00D636C4 /* MainTabBarController.swift in Sources */,
 				D1C718BF1FA8DF6B0090B922 /* UserSearchController.swift in Sources */,
 				D1C718B71FA7C6050090B922 /* UserProfilePhotoCell.swift in Sources */,
+				D1FDB6A01FAA686200CC1A69 /* CameraController.swift in Sources */,
 				D128E0D51FA7C3DC00D636C4 /* Post.swift in Sources */,
 				D128E0BB1FA22C3E00D636C4 /* UserProfileHeader.swift in Sources */,
 				D1C718BB1FA7F4C50090B922 /* HomeController.swift in Sources */,
@@ -461,6 +465,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6MD343B76Q;
 				INFOPLIST_FILE = "Instagram Project/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "KevinVu.Instagram-Project";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -477,6 +482,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6MD343B76Q;
 				INFOPLIST_FILE = "Instagram Project/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "KevinVu.Instagram-Project";
 				PRODUCT_NAME = "$(TARGET_NAME)";

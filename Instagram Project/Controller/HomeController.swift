@@ -19,7 +19,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateFeedNotificationName, object: nil)
-        
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         let refreshControl = UIRefreshControl()
@@ -61,6 +60,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavigationItems(){
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3"), style: .plain, target: self, action: #selector(handleCamera))
+    }
+    
+    @objc func handleCamera(){
+        let cameraController = CameraController()
+        
+        present(cameraController, animated: true, completion: nil)
+        
     }
     
     func fetchPosts(){
@@ -85,7 +92,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
             self.posts.sort(by: { (p1, p2) -> Bool in
                 return p1.timeStamp.compare(p2.timeStamp) == .orderedDescending
             })
-            self.collectionView?.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
+            
         }) { (err) in
             print("Failed to fetch posts:", err)
         }
@@ -98,8 +108,11 @@ extension HomeController{
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? HomePostCell{
-            cell.post = posts[indexPath.item]
-            return cell
+            if posts.count > 0{
+                cell.post = posts[indexPath.item]
+                 return cell
+            }
+            
         }
         return UICollectionViewCell()
        

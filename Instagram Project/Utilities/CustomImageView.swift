@@ -17,10 +17,12 @@ class CustomImageView: UIImageView {
         lastURLUserToLoadImage = urlString
         self.image = nil
         if let catchedImage = imageCache[urlString]{
+            DispatchQueue.main.async {
             self.contentMode = .scaleAspectFill
             self.clipsToBounds = true
             self.image = catchedImage
             return
+            }
         }
         guard let url = URL(string: urlString) else {return}
         URLSession.shared.dataTask(with: url) { (data, response, error) in
