@@ -12,6 +12,7 @@ import Firebase
 private let reuseIdentifier = "Cell"
 
 class UserSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+    
     var users = [User]()
     var filteredUsers = [User]()
     
@@ -28,6 +29,7 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
         collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .onDrag
         collectionView?.register(UserSearchCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         navigationController?.navigationBar.addSubview(searchBar)
         let navBar = navigationController?.navigationBar
@@ -35,13 +37,19 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
         
         fetchUsers()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar.isHidden = false
+    }
     private func fetchUsers(){
         
         let ref = Database.database().reference().child("users")
         ref.observe(.value, with: { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: Any] else {return}
             dictionaries.forEach({ (key,value) in
+                if key == Auth.auth().currentUser?.uid{
+                    return
+                }
+                
                 guard let userDictionary = value as? [String: Any] else {return}
                 let user = User(uid: key, dictionary: userDictionary)
                 self.users.append(user)
@@ -55,9 +63,6 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
         }) { (error) in
             print("Failed",error)
         }
-    
-    
-    
     }
 
 
@@ -81,6 +86,16 @@ extension UserSearchController {
         return CGSize(width: view.frame.width, height: 66)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        searchBar.isHidden = true
+        searchBar.resignFirstResponder()
+        
+        let user = filteredUsers[indexPath.item]
+        let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileController.userId = user.uid
+        navigationController?.pushViewController(userProfileController, animated: true)
+        
+    }
 }
 
 extension UserSearchController {

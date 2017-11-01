@@ -14,19 +14,21 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var user: User?
     let cellId = "cellId"
     var posts = [Post]()
+    var userId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = UIColor.darkGray
-        navigationItem.title = " "
+        
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         fetchUser()
         setupLogOutButton()
-        fetchOrderedPosts()
+//        fetchOrderedPosts()
     }
+    
     func fetchOrderedPosts(){
-        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let uid = self.user?.uid else {return}
         let ref = Database.database().reference().child("posts").child(uid)
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else {return}
@@ -38,13 +40,10 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         }) { (error) in
             print("Failed to fetch ordered posts:",error)
         }
-        
-        
     }
     
     func setupLogOutButton(){
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogOut))
-  
     }
     
     @objc func handleLogOut(){
@@ -68,12 +67,14 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func fetchUser(){
-        
-        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let uid = userId ?? Auth.auth().currentUser?.uid ?? ""
+
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
             self.navigationItem.title = self.user?.userName
             self.collectionView?.reloadData()
+            self.fetchOrderedPosts()
         }
     }
 }

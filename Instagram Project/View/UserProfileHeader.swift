@@ -16,6 +16,7 @@ class UserProfileHeader: UICollectionViewCell {
             guard let profileImageUrl = user?.profileImageUrl else {return}
             profileImageView.loadImage(urlString: profileImageUrl)
             usernameLabel.text = user?.userName
+            setupEditFollowButton()
         }
     }
     
@@ -92,13 +93,15 @@ class UserProfileHeader: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    let editProfileButton : UIButton = {
+    lazy var editProfileFollowButton : UIButton = {
        let button = UIButton(type: .system)
         button.setTitle("Edit Profile", for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 1
+        button.layer.cornerRadius = 3
+        button.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
         return button
     }()
     
@@ -111,8 +114,8 @@ class UserProfileHeader: UICollectionViewCell {
         addSubview(usernameLabel)
         usernameLabel.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, bottom: gridbutton.topAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
         setupUserStatsView()
-        addSubview(editProfileButton)
-        editProfileButton.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
+        addSubview(editProfileFollowButton)
+        editProfileFollowButton.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -126,7 +129,6 @@ class UserProfileHeader: UICollectionViewCell {
         
         
     }
-    
     
     private func setupBottomToolbar(){
         let topDividerView = UIView()
@@ -144,6 +146,24 @@ class UserProfileHeader: UICollectionViewCell {
         stackView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
         topDividerView.anchor(top: stackView.topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
         bottomDividerView.anchor(top: stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
+        
+        
+    }
+    
+    func setupEditFollowButton() {
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else {return}
+        guard let userID = user?.uid else {return}
+        
+        if currentLoggedInUserId == userID{
+            
+        }
+        else {
+            editProfileFollowButton.setTitle("Follow", for: .normal)
+        }
+    }
+    @objc func handleEditProfileOrFollow() {
+        
+        print("TEST TEST TEST")
         
         
     }
