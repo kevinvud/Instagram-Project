@@ -17,17 +17,34 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateFeedNotificationName, object: nil)
+        
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
         setupNavigationItems()
+        fetchAllPosts()
+    }
+    
+    @objc func handleUpdateFeed(){
+        handleRefresh()
+    }
+    
+    @objc func handleRefresh() {
+        posts.removeAll()
+        fetchAllPosts()
+    }
+    
+    func fetchAllPosts() {
         fetchPosts()
         fetchFollowingUserIds()
-        
-        
-        
     }
     
     func fetchFollowingUserIds() {
+
         guard let uid = Auth.auth().currentUser?.uid else {return}
         Database.database().reference().child("following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             guard let userIdsDictionary = snapshot.value as? [String: Any] else {return}
@@ -44,7 +61,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func setupNavigationItems(){
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
-        
     }
     
     func fetchPosts(){
@@ -58,6 +74,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func fetchPostWithUser(user: User){
         let ref = Database.database().reference().child("posts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            self.collectionView?.refreshControl?.endRefreshing()
             guard let dictionaries = snapshot.value as? [String: Any] else {return}
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else {return}
