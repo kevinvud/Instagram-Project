@@ -33,6 +33,7 @@
 		D1C718BF1FA8DF6B0090B922 /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718BE1FA8DF6B0090B922 /* UserSearchController.swift */; };
 		D1C718C11FA8E6B60090B922 /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C718C01FA8E6B60090B922 /* UserSearchCell.swift */; };
 		D1FDB6A01FAA686200CC1A69 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FDB69F1FAA686200CC1A69 /* CameraController.swift */; };
+		D1FDB6A21FAABB5C00CC1A69 /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FDB6A11FAABB5C00CC1A69 /* PreviewPhotoContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		D1C718BE1FA8DF6B0090B922 /* UserSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
 		D1C718C01FA8E6B60090B922 /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
 		D1FDB69F1FAA686200CC1A69 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		D1FDB6A11FAABB5C00CC1A69 /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				D1C718B61FA7C6050090B922 /* UserProfilePhotoCell.swift */,
 				D1C718BC1FA7F9B70090B922 /* HomePostCell.swift */,
 				D1C718C01FA8E6B60090B922 /* UserSearchCell.swift */,
+				D1FDB6A11FAABB5C00CC1A69 /* PreviewPhotoContainerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				D128E0B91FA2257300D636C4 /* UserProfileController.swift in Sources */,
 				D1C718B91FA7E9CB0090B922 /* CustomImageView.swift in Sources */,
 				D128E0C91FA39A1F00D636C4 /* LoginController.swift in Sources */,
+				D1FDB6A21FAABB5C00CC1A69 /* PreviewPhotoContainerView.swift in Sources */,
 				D128E0D31FA798EF00D636C4 /* SharePhotoController.swift in Sources */,
 				D1622DE61FA0DB900079A6ED /* AppDelegate.swift in Sources */,
 				D128E0BD1FA2342C00D636C4 /* User.swift in Sources */,
